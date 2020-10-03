@@ -10,5 +10,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/api", calculatorRoutes);
+app.all("*", (req, res) => {
+  res.status(404).send("ROTA NAO ENCONTRADA");
+});
 
 app.listen(PORT, console.log(`RUNNING ON PORT ${PORT}`));
