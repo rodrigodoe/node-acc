@@ -1,3 +1,5 @@
+/* helper que converte numeros e letras */
+
 exports.convert = (number) => {
   if (!calc[number]) {
     return null;
@@ -5,7 +7,10 @@ exports.convert = (number) => {
   return calc[number];
 };
 
+/* Biblitocas com os botes e os valores */
+
 const calc = {
+  1: "",
   2: "a",
   22: "b",
   222: "c",
@@ -14,7 +19,7 @@ const calc = {
   333: "f",
   4: "g",
   44: "h",
-  444: "ï",
+  444: "i",
   5: "j",
   55: "k",
   555: "l",
