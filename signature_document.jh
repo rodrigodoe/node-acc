@@ -1,0 +1,153 @@
+entity SignatureDocument {
+	documentId String,
+    name String,
+    order String,
+    lastPageWidth String,
+    lastPageHeight String,
+    status String,
+}
+
+entity SignatureConfiguration {
+	configurationId String,
+    documentId String,
+    profileId String,
+    signatureType SignatureType,
+    positionX Integer,
+    positionY Integer,
+    screenX Float,
+    screenY Float,
+    status String
+}
+
+entity GeneralConfigurations {
+	configurationid String,
+    type ConfigurationType,
+    value String
+}
+
+entity SignatureProfile {
+	profileId String,
+    description String,
+    type ProfileType,
+    order String,
+    cpf String,
+    name String,
+    email String,
+    status String    
+}
+
+entity DocumentTemplate {
+	templateId String,
+    name String,
+    description String,
+    code String,
+    financingBrand String,
+    type String,
+    status String,
+}
+
+entity Recipient{
+	recipient String,
+    envelopeId String,
+    type RecipientType,
+    name String,
+    email String,
+    status String
+}
+
+entity Envelope{
+	envelopeId String,
+    proposalId String,
+    novarPendency String,
+    octoValue String,
+    status EnvelopeStatus
+}
+
+
+
+entity DocumentProducts {
+	id Long,
+    templatedId String,
+}
+
+entity DocumentGuarantess {
+	guaranteeId Long,
+    templatedId String,
+}
+
+
+
+relationship OneToOne {
+	SignatureProfile to SignatureConfiguration{profileId}
+}
+
+relationship OneToOne {
+	SignatureDocument to SignatureConfiguration{documentId}
+}
+
+relationship OneToMany {
+	DocumentTemplate to DocumentProducts{templatedId},
+}
+
+relationship OneToMany {
+	DocumentTemplate to DocumentGuarantess{templatedId},
+}
+
+relationship OneToOne {
+	Envelope to Recipient{envelopeId}
+}
+
+
+enum ProfileType {
+	BANK,
+    WITNESS,
+    GUARANTOR,
+    CUSTOMER,
+    PARTNER,
+    PLACE_AND_DATE,
+    DEALERSHIP
+}
+
+enum RecipientType {
+	SIGNER,
+    CARBON_COPY
+}
+
+
+enum SignatureType {
+	DIGITAL_CERTIFICATE,
+    ELETRONIC_SIGNATURE,
+    NO_SIGNATURE
+}
+
+enum ConfigurationType {
+	DEFAULT_SUBJECT_EMAIL,
+    SEND_EMAIL_COPY,
+    SELFIE_MANDATORY,
+    EXPIRATION_SMS_IN_DAYS,
+    EXPIRATIONS_EMAIL_INDAYS
+}
+
+enum EnvelopeStatus {
+	CREATED,
+    SENT,
+    DELIEVERED,
+    COMPLETED,
+    VOIDED,
+    DECLINED
+}
+
+
+
+// Set pagination options
+paginate JobHistory, Employee with infinite-scroll
+paginate Job with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
